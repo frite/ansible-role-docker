@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include ansible-docker"
+    - name: "Include ansible-role-docker"
       include_role:
-        name: "ansible-docker"
+        name: "ansible-role-docker"
