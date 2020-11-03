@@ -1,0 +1,17 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Gather installed packages
+    package_facts:
+      manager: auto
+
+  - name: Assert packages are installed
+    assert:
+      that: "item in ansible_facts.packages"
+    with_items:
+      - docker-ce
+      - curl
+      - gnupg-agent

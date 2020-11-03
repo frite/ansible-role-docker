@@ -1,0 +1,45 @@
+---
+- name: Docker | Remove old versions of docker.
+  apt:
+    name:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: Docker | Install dependencies.
+  apt:
+    name: "{{ docker_apt_dependencies }}"
+    state: present
+    update_cache: yes
+
+- name: Docker | Add Docker apt key.
+  apt_key:
+    url: "{{ docker_apt_gpg_key }}"
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    state: present
+  ignore_errors: "{{ docker_apt_ignore_key_error }}"
+
+- name: Docker | Add Docker repository.
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    update_cache: true
+
+- name: Docker | Install Docker.
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker
+
+- name: Docker | Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+
+- name: Docker | Ensure docker users are added to the docker group.
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"

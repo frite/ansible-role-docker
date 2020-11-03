@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Manolis M.
+  role_name: docker
+  description: APT configuration
+  company: NaN
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+  galaxy_tags:
+    - administration
+    - ubuntu
+    - systems
+    - containers
+    - docker
+  dependencies: []
